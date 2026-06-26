@@ -9,6 +9,7 @@ from app.db.database import Base
 from app.models.project import Project
 from app.models.user import User
 from app.models.transaction import Transaction
+from app.models.job import Job
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
