@@ -6,6 +6,7 @@ from app.models.job import Job, JobStatus
 from app.schemas.job import JobCreate
 from app.services import billing_service
 from app.providers.factory import ProviderFactory
+from app.infrastructure.redis import enqueue_job
 
 def create_job(db: Session, user_id: uuid.UUID, job_create: JobCreate) -> Job:
     # 1. Validate Provider
@@ -23,6 +24,10 @@ def create_job(db: Session, user_id: uuid.UUID, job_create: JobCreate) -> Job:
     db.add(job)
     db.commit()
     db.refresh(job)
+    
+    # 3. Enqueue
+    enqueue_job(str(job.id))
+    
     return job
 
 def get_job(db: Session, job_id: uuid.UUID) -> Job | None:

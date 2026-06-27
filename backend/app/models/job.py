@@ -7,6 +7,7 @@ from sqlalchemy import String, Integer, DateTime, ForeignKey, Enum, JSON, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.database import Base
+from app.models.project import Project
 
 class JobStatus(str, enum.Enum):
     QUEUED = "queued"
