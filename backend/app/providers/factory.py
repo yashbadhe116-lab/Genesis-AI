@@ -1,38 +1,8 @@
 from app.providers.base import BaseProvider
-from app.providers.types import AIRequest, AIResponse
-from app.providers.replicate.provider import ReplicateProvider
-
-class MockProvider(BaseProvider):
-    # ... (existing mock implementation) ...
-    def __init__(self, name: str):
-        self.name = name
-
-    def generate_image(self, request: AIRequest) -> AIResponse:
-        return AIResponse(provider_job_id=f"mock-{self.name}-1", status="processing")
-
-    def generate_video(self, request: AIRequest) -> AIResponse:
-        return AIResponse(provider_job_id=f"mock-{self.name}-1", status="processing")
-
-    def generate_audio(self, request: AIRequest) -> AIResponse:
-        return AIResponse(provider_job_id=f"mock-{self.name}-1", status="processing")
-
-    def generate_text(self, request: AIRequest) -> AIResponse:
-        return AIResponse(provider_job_id=f"mock-{self.name}-1", status="processing")
-
-    def get_job_status(self, provider_job_id: str) -> str:
-        return "processing"
-
-    def cancel_job(self, provider_job_id: str) -> bool:
-        return True
+from app.providers.replicate_provider import ReplicateProvider
 
 class ProviderFactory:
     _providers = {
-        "openai": MockProvider("openai"),
-        "google": MockProvider("google"),
-        "runway": MockProvider("runway"),
-        "kling": MockProvider("kling"),
-        "elevenlabs": MockProvider("elevenlabs"),
-        "stability": MockProvider("stability"),
         "replicate": ReplicateProvider(),
     }
 

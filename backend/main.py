@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+import os
 
 from app.api.v1.projects import router as projects_router
 from app.api.v1.auth import router as auth_router
@@ -10,6 +12,10 @@ app = FastAPI(
     description="AI Media Factory Backend",
     version="1.0.0",
 )
+
+# Ensure the directory exists
+os.makedirs("generated_images", exist_ok=True)
+app.mount("/generated_images", StaticFiles(directory="generated_images"), name="generated_images")
 
 app.include_router(projects_router, prefix="/api/v1")
 app.include_router(auth_router, prefix="/api/v1")
