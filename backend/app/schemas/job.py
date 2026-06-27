@@ -9,6 +9,7 @@ class JobBase(BaseModel):
     input_data: dict[str, Any]
     project_id: uuid.UUID | None = None
     priority: int = 0
+    provider_name: str | None = None
 
 class JobCreate(JobBase):
     pass
@@ -19,6 +20,7 @@ class JobResponse(JobBase):
     status: JobStatus
     progress: int
     error_message: str | None = None
+    provider_name: str | None = None
     created_at: datetime
     started_at: datetime | None = None
     completed_at: datetime | None = None

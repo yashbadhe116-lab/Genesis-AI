@@ -5,15 +5,14 @@ from sqlalchemy import select
 from app.models.job import Job, JobStatus
 from app.schemas.job import JobCreate
 from app.services import billing_service
+from app.providers.factory import ProviderFactory
 
 def create_job(db: Session, user_id: uuid.UUID, job_create: JobCreate) -> Job:
-    # 1. Deduct credits and record transaction (within same transaction if passed)
-    # Note: billing_service.deduct_credits currently commits. 
-    # To be truly atomic, we need to restructure billing_service to not commit automatically
-    # OR we use nested transactions if supported by the DB.
-    # Given the requirements, I will assume a flat commit for now or refactor billing.
+    # 1. Validate Provider
+    if job_create.provider_name:
+        ProviderFactory.get_provider(job_create.provider_name)
     
-    # Refactoring billing logic for atomicity
+    # 2. Deduct credits
     cost = 10 # Example cost
     billing_service.deduct_credits(db, user_id, cost, f"Job: {job_create.job_type}")
     
