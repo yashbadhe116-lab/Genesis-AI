@@ -1,7 +1,9 @@
 from app.providers.base import BaseProvider
 from app.providers.types import AIRequest, AIResponse
+from app.providers.replicate.provider import ReplicateProvider
 
 class MockProvider(BaseProvider):
+    # ... (existing mock implementation) ...
     def __init__(self, name: str):
         self.name = name
 
@@ -31,6 +33,7 @@ class ProviderFactory:
         "kling": MockProvider("kling"),
         "elevenlabs": MockProvider("elevenlabs"),
         "stability": MockProvider("stability"),
+        "replicate": ReplicateProvider(),
     }
 
     @classmethod
