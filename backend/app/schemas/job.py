@@ -17,10 +17,16 @@ class JobCreate(JobBase):
 class JobResponse(JobBase):
     id: uuid.UUID
     user_id: uuid.UUID
+
     status: JobStatus
     progress: int
+
+    output_data: dict[str, Any] | None = None
+
     error_message: str | None = None
+
     provider_name: str | None = None
+
     created_at: datetime
     started_at: datetime | None = None
     completed_at: datetime | None = None

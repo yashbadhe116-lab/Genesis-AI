@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 import os
 
 from app.api.v1.projects import router as projects_router
@@ -12,7 +13,16 @@ app = FastAPI(
     description="AI Media Factory Backend",
     version="1.0.0",
 )
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # Ensure the directory exists
 os.makedirs("generated_images", exist_ok=True)
 app.mount("/generated_images", StaticFiles(directory="generated_images"), name="generated_images")

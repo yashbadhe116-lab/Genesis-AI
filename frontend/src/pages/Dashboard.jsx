@@ -49,9 +49,15 @@ function Dashboard() {
         <div style={{ marginTop: '20px' }}>
           <p>Status: {job.status}</p>
           <p>Progress: {job.progress}%</p>
+
           {job.status === 'completed' && job.output_data && (
-            <img src={job.output_data.image_url} alt="Generated" style={{ maxWidth: '100%' }} />
+            <img
+              src={`http://127.0.0.1:8000${job.output_data.public_url}`}
+              alt="Generated"
+              style={{ maxWidth: '100%', marginTop: '20px' }}
+            />
           )}
+
           {job.status === 'failed' && <p style={{ color: 'red' }}>Error: {job.error_message}</p>}
         </div>
       )}
