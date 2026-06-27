@@ -1,3 +1,4 @@
+import AppLayout from "@/components/layout/AppLayout";
 import { useState, useEffect } from 'react';
 import api from '../api/api';
 
@@ -39,7 +40,7 @@ function Dashboard() {
     return () => clearInterval(interval);
   }, [job]);
 
-  return (
+  return (<AppLayout>
     <div style={{ padding: '20px' }}>
       <h1>Dashboard</h1>
       <input type="text" placeholder="Enter prompt" value={prompt} onChange={(e) => setPrompt(e.target.value)} />
@@ -62,7 +63,9 @@ function Dashboard() {
         </div>
       )}
     </div>
-  );
+  </AppLayout>
+  )
+    ;
 }
 
 export default Dashboard;
